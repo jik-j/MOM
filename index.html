@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+    <title>Happy Birthday Mom!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #ffe5ec;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        h1 {
+            color: #e91e63;
+            font-size: 3em;
+            margin-top: 50px;
+            animation: textPop 2s infinite alternate;
+        }
+
+        p {
+            font-size: 1.2em;
+            margin: 20px auto;
+            max-width: 600px;
+        }
+
+        .heart {
+            color: #e91e63;
+        }
+
+        .slideshow-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            z-index: -1;
+        }
+
+        .slides {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            opacity: 0;
+            transform: scale(0.5);
+            animation: slideIn 2s forwards;
+        }
+
+        .slide1 { top: 5%; left: 5%; animation-delay: 1s; }
+        .slide2 { top: 10%; left: 30%; animation-delay: 1.5s; }
+        .slide3 { top: 25%; left: 50%; animation-delay: 2s; }
+        .slide4 { top: 40%; left: 70%; animation-delay: 2.5s; }
+        .slide5 { top: 55%; left: 10%; animation-delay: 3s; }
+        .slide6 { top: 60%; left: 35%; animation-delay: 3.5s; }
+        .slide7 { top: 75%; left: 60%; animation-delay: 4s; }
+        .slide8 { top: 80%; left: 80%; animation-delay: 4.5s; }
+        .slide9 { top: 90%; left: 15%; animation-delay: 5s; }
+        .slide10 { top: 10%; left: 80%; animation-delay: 5.5s; }
+        .slide11 { top: 20%; left: 15%; animation-delay: 6s; }
+        .slide12 { top: 30%; left: 70%; animation-delay: 6.5s; }
+        .slide13 { top: 50%; left: 25%; animation-delay: 7s; }
+        .slide14 { top: 70%; left: 40%; animation-delay: 7.5s; }
+        .slide15 { top: 85%; left: 55%; animation-delay: 8s; }
+
+        @keyframes slideIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes blink {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0;
+            }
+        }
+
+        @keyframes textPop {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+
+        #letter {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border: 2px solid #e91e63;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+            display: none;
+        }
+
+        #open-letter {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #e91e63;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+
+        #close-letter {
+            background-color: #e91e63;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        #video-container {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            z-index: 20;
+            text-align: center;
+            width: 350px;
+            height: 600px;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        #close-video {
+            background-color: #e91e63;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        #bg-music {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            opacity: 0.7;
+            background-color: transparent;
+            border-radius: 10px;
+            z-index: 999;
+        }
+
+        #start-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 2em;
+            cursor: pointer;
+        }
+
+    </style>
+    <script>
+        let images = [
+            "WhatsApp Image 2024-12-19 at 17.09.06_33f7b12b.jpg",
+            "WhatsApp Image 2024-12-19 at 17.09.06_119df6f3.jpg",          
+            "WhatsApp Image 2024-12-19 at 17.09.06_a4a82f6a.jpg",
+            "WhatsApp Image 2024-12-19 at 17.09.07_8cd230ca.jpg",
+            "WhatsApp Image 2024-12-19 at 17.09.07_13ccbb2a.jpg",
+            "WhatsApp Image 2024-12-19 at 17.09.07_59cf5340.jpg",
+            "WhatsApp Image 2024-12-19 at 17.09.08_37f6396d.jpg",
+            "WhatsApp Image 2024-12-19 at 17.09.08_300870fc.jpg",
+            "WhatsApp Image 2024-12-19 at 17.09.08_c9b7c94d.jpg",
+            "WhatsApp Image 2024-12-19 at 17.09.09_8cd5ee38.jpg",
+            "WhatsApp Image 2024-12-19 at 17.09.09_78e40e47.jpg",
+            "WhatsApp Image 2024-12-19 at 17.09.10_4fb6f4e9.jpg",
+            "WhatsApp Image 2024-12-19 at 17.09.10_0798a9d1.jpg",
+            "WhatsApp Image 2024-12-19 at 17.09.10_d143ddb3.jpg",
+            "WhatsApp Image 2024-12-19 at 17.09.11_6e14ca9e.jpg"
+        ];
+
+        function startExperience() {
+            document.getElementById("bg-music").play();
+            showSlides();
+            document.getElementById("start-screen").style.display = "none";
+        }
+
+        function showSlides() {
+            const slideshowContainer = document.querySelector('.slideshow-container');
+            slideshowContainer.innerHTML = "";
+
+            images.forEach((image, index) => {
+                let img = document.createElement('img');
+                img.src = image;
+                img.alt = "Birthday Image " + (index + 1);
+                img.className = `slides slide${index + 1}`;
+                slideshowContainer.appendChild(img);
+
+                img.style.animation = `slideIn 2s forwards ${index}s`;
+
+                setTimeout(() => {
+                    img.style.animation = `blink 1s infinite ${index + 2}s`; 
+                }, 2000 + index * 2000); 
+            });
+
+            setTimeout(() => {
+                document.getElementById("letter").style.display = "block";
+            }, images.length * 2000); 
+        }
+
+        function openLetter() {
+            document.getElementById("letter").style.display = "block";
+        }
+
+        function closeLetter() {
+            document.getElementById("letter").style.display = "none";
+            showVideo();
+        }
+
+        function showVideo() {
+            const videoContainer = document.getElementById("video-container");
+            const video = document.getElementById("video");
+            const video2 = document.getElementById("video2");
+
+            videoContainer.style.display = "block";
+            const bgMusic = document.getElementById("bg-music");
+            bgMusic.pause(); 
+            video.play();
+
+            video.onended = () => {
+                video.style.display = "none";
+                video2.style.display = "block";
+                video2.play();
+
+                video2.onended = () => {
+                    videoContainer.style.display = "none";
+                    bgMusic.play();
+                    openLetter();
+                };
+            };
+        }
+
+        function closeVideo() {
+            const videoContainer = document.getElementById("video-container");
+            const video = document.getElementById("video");
+            const video2 = document.getElementById("video2");
+
+            video.pause();
+            video.currentTime = 0; 
+            video2.pause();
+            video2.currentTime = 0;
+            videoContainer.style.display = "none";
+            const bgMusic = document.getElementById("bg-music");
+            bgMusic.play(); 
+        }
+    </script>
+</head>
+<body>
+    <div id="start-screen" onclick="startExperience()">Click to Start</div>
+    <audio id="bg-music" loop>
+        <source src="m.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+    <div id="letter">
+        <h1>Happy Birthday, Homemaker! <span class="heart">&#10084;</span></h1>
+        <p>Dear Mom,</p>
+        <p>You are the heart of our family and the one who keeps us all connected with your love and kindness. On your special day, I want to remind you how much you mean to me and everyone around you.</p>
+        <p>Every smile, every hug, and every word of encouragement from you has made me the person I am today. You are truly one of a kind, and I am endlessly grateful for all the sacrifices you’ve made for us.</p>
+        <p>I hope this day brings you as much happiness as you’ve brought to everyone who knows you. Here’s to celebrating the incredible person you are!</p>
+        <p>May your year ahead be filled with dreams coming true, endless joy, and all the love in the world. You deserve it all and so much more. I love you, Mom!</p>
+        <button id="close-letter" onclick="closeLetter()">Close</button>
+    </div>
+    <button id="open-letter" onclick="openLetter()">Open Letter</button>
+    <div class="slideshow-container"></div>
+
+    <!-- Video Container -->
+    <div id="video-container">
+        <video id="video" controls>
+            <source src="hapiie.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <video id="video2" controls style="display: none;">
+            <source src="hapiie 2.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <button id="close-video" onclick="closeVideo()">Close Video</button>
+    </div>
+</body>
+</html>
